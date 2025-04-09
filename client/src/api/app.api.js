@@ -13,6 +13,19 @@ export const getAllCurrencies = async () => {
   }
 };
 
+// Obtener todas las transacciones
+export const getAllTransactions = async () => {
+  try {
+    const response = await axios.get(
+      "http://localhost:8000/app/api/transactions/"
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error al obtener las monedas:", error);
+    throw error;
+  }
+};
+
 // Obtener la moneda por su symbol
 export const getCurrencyBySymbol = async (symbol) => {
   try {
@@ -125,5 +138,27 @@ export const getConversionRate = async (currency) => {
   } catch (error) {
     console.error("Error al obtener la tasa de conversión:", error);
     throw error;
+  }
+};
+
+export const getConversionRatesFromUSDT = async (symbols) => {
+  try {
+    const vsCurrencies = symbols.map((s) => s.toLowerCase()).join(",");
+    const response = await axios.get(
+      `https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=${vsCurrencies}`
+    );
+
+    const rates = response.data.tether;
+
+    // Convertimos a una forma útil: { BTC: 0.000015, SOL: 0.05, ... }
+    const formatted = {};
+    for (const [symbol, rate] of Object.entries(rates)) {
+      formatted[symbol.toUpperCase()] = rate;
+    }
+
+    return formatted;
+  } catch (error) {
+    console.error("Error al obtener tasas de conversión:", error);
+    return {};
   }
 };

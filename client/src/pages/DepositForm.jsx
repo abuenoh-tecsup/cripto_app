@@ -163,7 +163,7 @@ export function DepositForm() {
               type="button"
               className={`flex-1 py-2 text-lg font-medium ${
                 transactionType === "deposit"
-                  ? "bg-gray-500 text-white"
+                  ? "bg-red-800 text-white"
                   : "bg-gray-200 text-gray-700"
               } rounded-l-md transition-all duration-300`}
               onClick={() => handleTransactionChange("deposit")}
@@ -174,7 +174,7 @@ export function DepositForm() {
               type="button"
               className={`flex-1 py-2 text-lg font-medium ${
                 transactionType === "withdrawal"
-                  ? "bg-gray-500 text-white"
+                  ? "bg-red-800 text-white"
                   : "bg-gray-200 text-gray-700"
               } rounded-r-md transition-all duration-300`}
               onClick={() => handleTransactionChange("withdrawal")} // Cambiar 'sell' a 'withdrawal'
@@ -234,7 +234,7 @@ export function DepositForm() {
 
           <button
             type="submit"
-            className="w-full bg-gray-500 text-white p-2 rounded-md hover:bg-gray-600 transition"
+            className="w-full bg-red-800 text-white p-2 rounded-md hover:bg-red-900 transition"
             disabled={!conversionRate}
           >
             {transactionType === "deposit" ? "Depositar USDT" : "Retirar USDT"}{" "}
