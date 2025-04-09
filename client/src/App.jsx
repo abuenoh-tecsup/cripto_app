@@ -3,6 +3,7 @@ import { DepositForm } from "./pages/DepositForm";
 import { Home } from "./pages/Home";
 import { Spot } from "./pages/Spot";
 import { Nav } from "./components/Nav";
+import { Toaster } from "react-hot-toast"
 
 function App() {
     return (
@@ -14,6 +15,7 @@ function App() {
                 <Route path="/deposit" element={<DepositForm />}></Route>
 				<Route path="/spot/:symbol" element={<Spot />}></Route>
             </Routes>
+            <Toaster/>
         </BrowserRouter>
     );
 }
