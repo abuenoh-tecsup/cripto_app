@@ -11,7 +11,7 @@ export function Nav() {
       <div className="space-x-4">
         <Link to="/home" className="hover:text-gray-400">Home</Link>
         <Link to="/deposit" className="hover:text-gray-400">Deposit</Link>
-        <Link to="/" className="hover:text-gray-400">Profile</Link>
+        <Link to="/spot/BTC" className="hover:text-gray-400">Spot</Link>
       </div>
     </nav>
   );

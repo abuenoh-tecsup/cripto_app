@@ -11,7 +11,7 @@ class Currency(models.Model):
 
 class Wallet(models.Model):
     currency = models.ForeignKey(Currency, on_delete=models.CASCADE)  # Relación con la moneda (USD, USDT)
-    balance = models.DecimalField(max_digits=20, decimal_places=8, default=Decimal('0.0'))  # Saldo de la moneda
+    balance = models.DecimalField(max_digits=30, decimal_places=16, default=Decimal('0.0'))  # Saldo de la moneda
 
     def __str__(self):
         return f"Wallet - {self.currency.symbol}: {self.balance} {self.currency.symbol}"
@@ -26,11 +26,11 @@ class Transaction(models.Model):
     )
 
     transaction_type = models.CharField(max_length=10, choices=TRANSACTION_TYPES)  # Tipo de transacción
-    amount = models.DecimalField(max_digits=20, decimal_places=8)  # Monto de la transacción (moneda origen)
-    total_value = models.DecimalField(max_digits=20, decimal_places=8)  # Valor total de la transacción en moneda destino
+    amount = models.DecimalField(max_digits=30, decimal_places=16)  # Monto de la transacción (moneda origen)
+    total_value = models.DecimalField(max_digits=30, decimal_places=16)  # Valor total de la transacción en moneda destino
     currency_from = models.ForeignKey(Currency, related_name='currency_from', on_delete=models.CASCADE)  # Moneda de origen
     currency_to = models.ForeignKey(Currency, related_name='currency_to', on_delete=models.CASCADE)  # Moneda de destino
-    exchange_rate = models.DecimalField(max_digits=20, decimal_places=8)  # Tipo de cambio (Ej. 1 BTC = 24000 USDT)
+    exchange_rate = models.DecimalField(max_digits=30, decimal_places=16)  # Tipo de cambio (Ej. 1 BTC = 24000 USDT)
     wallet = models.ForeignKey(Wallet, on_delete=models.CASCADE)  # Billetera asociada con la transacción
     date = models.DateTimeField(auto_now_add=True)  # Fecha de la transacción
 

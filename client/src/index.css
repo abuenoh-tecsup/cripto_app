@@ -1,16 +1,20 @@
 @import "tailwindcss";
 
-html, body {
-  background-color: gray;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
+html,
+body {
+    background-color: gray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
 }
 
-div#root{
-  width: 100%;
-  height: 100%;
-  background-color: whitesmoke;
+div#root {
+    width: 100%;
+    height: 100%;
+    background-color: whitesmoke;
+    display: flex;
+    flex-direction: column;
+
 }

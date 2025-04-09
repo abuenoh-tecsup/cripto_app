@@ -7,4 +7,6 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         Currency.objects.create(name='Bitcoin', symbol='BTC')
         Currency.objects.create(name='Ethereum', symbol='ETH')
+        Currency.objects.create(name='Sol Peruano', symbol='PEN')
+        Currency.objects.create(name='Tether', symbol='USDT')
         self.stdout.write(self.style.SUCCESS('¡Criptos sembradas correctamente!'))

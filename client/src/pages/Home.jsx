@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
     getAllCurrencies,
     getAllTransactions,
@@ -11,6 +12,7 @@ export function Home() {
     const [wallets, setWallets] = useState([]);
     const [transactions, setTransactions] = useState([]);
     const [conversionRates, setConversionRates] = useState({});
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -53,8 +55,7 @@ export function Home() {
                                 currency.id == transaction.currency_from
                         );
                         const currencyTo = currenciesdata.find(
-                            (currency) =>
-                                currency.id == transaction.currency_to
+                            (currency) => currency.id == transaction.currency_to
                         );
                         return {
                             ...transaction,
@@ -90,7 +91,7 @@ export function Home() {
     }, 0);
 
     return (
-        <div className="grid grid-cols-5 grid-rows-5 gap-4 p-6 max-w-7xl mx-auto">
+        <div className="grid grid-cols-5 grid-rows-5 gap-4 p-6 w-9/12 mx-auto grow">
             {/* A: Total estimado */}
             <section className="col-span-3 row-span-1 bg-white border border-gray-300 rounded-xl p-6 shadow-sm">
                 <h1 className="text-xl font-bold text-gray-800 mb-2">
@@ -110,28 +111,37 @@ export function Home() {
                     Monedas disponibles
                 </h2>
                 <div className="grid grid-cols-3 gap-4">
-                    {currencies.map((currency) => (
-                        <div
-                            key={currency.id}
-                            className="bg-gray-50 cursor-pointer text-center border border-gray-200 rounded-xl p-3 hover:bg-red-800 hover:text-white transition-all duration-200"
-                        >
-                            <h3 className="font-bold text-inherit select-none">
-                                {currency.symbol}
-                            </h3>
-                            <p className="text-sm text-inherit select-none">
-                                {currency.name}
-                            </p>
-                        </div>
-                    ))}
+                    {currencies
+                        .filter(
+                            (currency) =>
+                                currency.symbol !== "USDT" &&
+                                currency.symbol !== "PEN"
+                        ) // Filtro para excluir USDT y PEN
+                        .map((currency) => (
+                            <div
+                                key={currency.id}
+                                className="bg-gray-50 cursor-pointer text-center border border-gray-200 rounded-xl p-3 hover:bg-red-800 hover:text-white transition-all duration-200"
+                                onClick={() => {
+                                    navigate(`/spot/${currency.symbol}`);
+                                }}
+                            >
+                                <h3 className="font-bold text-inherit select-none">
+                                    {currency.symbol}
+                                </h3>
+                                <p className="text-sm text-inherit select-none">
+                                    {currency.name}
+                                </p>
+                            </div>
+                        ))}
                 </div>
             </section>
 
             {/* B: Wallets */}
-            <section className="col-span-3 row-span-4 bg-white border border-gray-300 rounded-xl p-6 shadow-sm">
+            <section className="flex flex-col col-span-3 row-span-4 bg-white border border-gray-300 rounded-xl p-6 shadow-sm">
                 <h2 className="text-2xl font-bold text-gray-800 mb-4">
                     Tus Wallets
                 </h2>
-                <div className="overflow-y-scroll max-h-96">
+                <div className="overflow-y-scroll grow">
                     <div className="space-y-4">
                         {wallets.map((wallet) => (
                             <div
@@ -160,25 +170,27 @@ export function Home() {
                 </h2>
                 <div className="max-h-52 overflow-y-auto">
                     <ul>
-                        {transactions.map((tx) => (
-                            <li
-                                key={tx.id}
-                                className="py-3 border-b border-gray-200"
-                            >
-                                <div className="flex justify-between items-center mb-1">
-                                    <span className="font-semibold text-gray-700">
-                                        {tx.transaction_type}
-                                    </span>
-                                    <span className="text-sm text-gray-500">
-                                        {new Date(tx.date).toLocaleString()}
-                                    </span>
-                                </div>
-                                <div className="text-gray-600">
-                                    {tx.amount} {tx.currency_from.symbol} →{" "}
-                                    {tx.total_value} {tx.currency_to.symbol}
-                                </div>
-                            </li>
-                        ))}
+                        {transactions
+                            .sort((a, b) => new Date(b.date) - new Date(a.date)) // Ordenar por fecha de forma inversa
+                            .map((tx) => (
+                                <li
+                                    key={tx.id}
+                                    className="py-3 border-b border-gray-200"
+                                >
+                                    <div className="flex justify-between items-center mb-1">
+                                        <span className="font-semibold text-gray-700">
+                                            {tx.transaction_type}
+                                        </span>
+                                        <span className="text-sm text-gray-500">
+                                            {new Date(tx.date).toLocaleString()}
+                                        </span>
+                                    </div>
+                                    <div className="text-gray-600">
+                                        {tx.amount} {tx.currency_from.symbol} →{" "}
+                                        {tx.total_value} {tx.currency_to.symbol}
+                                    </div>
+                                </li>
+                            ))}
                     </ul>
                 </div>
             </section>
