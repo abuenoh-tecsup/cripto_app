@@ -133,16 +133,3 @@ npm run dev
 - Para producción, considera usar PostgreSQL, nginx, Docker, etc.
 
 ---
-
-## 📜 Licencia
-
-Este proyecto está bajo la licencia MIT.
-
----
-
-## ✨ Autor
-
-Desarrollado por [Tu Nombre](https://github.com/usuario)
-```
-
-¿Querés que también te genere un `.env.example` o un `package.json` limpio para el frontend con dependencias actualizadas?
