@@ -10,20 +10,16 @@ class CurrencySerializer(serializers.ModelSerializer):
 class WalletSerializer(serializers.ModelSerializer):
     """Serializer para las billeteras de los usuarios (saldo de USDT)"""
     currency = serializers.PrimaryKeyRelatedField(queryset=Currency.objects.all())
-    #currency = CurrencySerializer()
 
     class Meta:
         model = Wallet
-        fields = ['id', 'currency', 'balance']  # Eliminar 'user' si no lo vas a usar
+        fields = ['id', 'currency', 'balance']
 
 class TransactionSerializer(serializers.ModelSerializer):
     """Serializer para las transacciones realizadas"""
-    #currency_from = CurrencySerializer()  # Incluir la información de la moneda asociada a la transacción
-    #currency_to = CurrencySerializer()  # Incluir la información de la moneda asociada a la transacción
-    #wallet = WalletSerializer()  # Incluir la información de la billetera asociada a la transacción
-    currency_from = serializers.PrimaryKeyRelatedField(queryset=Currency.objects.all())  # Cambiado de CurrencySerializer a PrimaryKeyRelatedField
-    currency_to = serializers.PrimaryKeyRelatedField(queryset=Currency.objects.all())    # Cambiado de CurrencySerializer a PrimaryKeyRelatedField
-    wallet = serializers.PrimaryKeyRelatedField(queryset=Wallet.objects.all())  # Cambiado de WalletSerializer a PrimaryKeyRelatedField
+    currency_from = serializers.PrimaryKeyRelatedField(queryset=Currency.objects.all())
+    currency_to = serializers.PrimaryKeyRelatedField(queryset=Currency.objects.all()) 
+    wallet = serializers.PrimaryKeyRelatedField(queryset=Wallet.objects.all()) 
 
 
     class Meta:

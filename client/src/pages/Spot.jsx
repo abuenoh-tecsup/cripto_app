@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import TradingViewWidget from "../components/TradingViewWidget";
-import toast from "react-hot-toast"; // Importar toast
+import toast from "react-hot-toast";
 import {
     getConversionRate,
     getAllCurrencies,
@@ -20,7 +20,7 @@ export function Spot() {
     const [transactionType, setTransactionType] = useState("buy");
     const [conversionRate, setConversionRate] = useState(null);
     const [transactions, setTransactions] = useState([]);
-    const [walletBalance, setWalletBalance] = useState(null); // Agregar estado para el balance
+    const [walletBalance, setWalletBalance] = useState(null);
     const {
         register,
         handleSubmit,
@@ -37,17 +37,17 @@ export function Spot() {
             try {
                 const currenciesData = await getAllCurrencies();
                 setCurrencies(currenciesData);
-                toast.success("Monedas obtenidas correctamente"); // Agregar toast
+                toast.success("Monedas obtenidas correctamente");
                 console.log("Monedas obtenidas:", currenciesData);
 
                 const selectedCurrency = currenciesData.find(
                     (curr) => curr.symbol === params.symbol
                 );
                 setCurrency(selectedCurrency);
-                toast.success(`Moneda seleccionada: ${selectedCurrency.symbol}`); // Agregar toast
+                toast.success(`Moneda seleccionada: ${selectedCurrency.symbol}`);
                 console.log("Moneda seleccionada:", selectedCurrency);
             } catch (error) {
-                toast.error("Error al obtener las monedas"); // Agregar toast
+                toast.error("Error al obtener las monedas");
                 console.error("Error al obtener las monedas:", error);
             }
         };
@@ -84,10 +84,10 @@ export function Spot() {
                         }
                     );
                     setTransactions(transactionsDataWithDetails);
-                    toast.success("Transacciones cargadas correctamente"); // Agregar toast
+                    toast.success("Transacciones cargadas correctamente");
                     console.log(transactions);
                 } catch (error) {
-                    toast.error("Error al obtener las transacciones"); // Agregar toast
+                    toast.error("Error al obtener las transacciones");
                     console.error("Error al obtener las transacciones:", error);
                 }
             };
@@ -101,10 +101,10 @@ export function Spot() {
                 try {
                     const rate = await getConversionRate(symbol);
                     setConversionRate(rate);
-                    toast.success("Tasa de conversión obtenida correctamente"); // Agregar toast
+                    toast.success("Tasa de conversión obtenida correctamente");
                     console.log("Factor de conversión obtenido", rate);
                 } catch (error) {
-                    toast.error("Error al obtener la tasa de conversión"); // Agregar toast
+                    toast.error("Error al obtener la tasa de conversión");
                     console.error("Error al obtener la tasa de conversión", error);
                 }
             };
@@ -124,18 +124,18 @@ export function Spot() {
                         if (wallet) {
                             setWalletBalance(wallet.balance);
                         } else {
-                            setWalletBalance(0); // Si no existe wallet, el balance es 0
+                            setWalletBalance(0);
                         }
                     }
                 } catch (error) {
                     console.error("Error al obtener el balance de la wallet:", error);
-                    setWalletBalance(0); // Si hay error, se asume que no hay balance
+                    setWalletBalance(0);
                 }
             };
 
             fetchWalletBalance();
         }
-    }, [currencyFrom, currencies]); // Ejecutar cuando cambia currencyFrom o currencies
+    }, [currencyFrom, currencies]);
 
     useEffect(() => {
         if (amount && !isNaN(amount) && conversionRate) {
@@ -168,7 +168,7 @@ export function Spot() {
             const currencyTo = currencies.find((c) => c.symbol === currency_to);
 
             if (!currencyFrom || !currencyTo) {
-                toast.error("Una de las monedas no fue encontrada."); // Agregar toast
+                toast.error("Una de las monedas no fue encontrada.");
                 return;
             }
 
@@ -184,12 +184,12 @@ export function Spot() {
             if (!walletFrom) {
                 toast.error(
                     `No tienes una wallet de ${currencyFrom.symbol} para operar.`
-                ); // Agregar toast
+                );
                 return;
             }
 
             if (parseFloat(walletFrom.balance) < parseFloat(amount)) {
-                toast.error("Saldo insuficiente en la wallet de origen."); // Agregar toast
+                toast.error("Saldo insuficiente en la wallet de origen.");
                 return;
             }
 
@@ -200,7 +200,7 @@ export function Spot() {
                     balance: parseFloat(total_value),
                 };
                 updatedWalletTo = await createWallet(newWalletData);
-                toast.success("Wallet destino creada correctamente"); // Agregar toast
+                toast.success("Wallet destino creada correctamente");
                 console.log("Wallet destino creada:", updatedWalletTo);
             } else {
                 const updatedBalanceTo =
@@ -209,7 +209,7 @@ export function Spot() {
                     ...walletTo,
                     balance: updatedBalanceTo,
                 });
-                toast.success("Wallet destino actualizada correctamente"); // Agregar toast
+                toast.success("Wallet destino actualizada correctamente");
                 console.log("Wallet destino actualizada:", updatedWalletTo);
             }
 
@@ -219,7 +219,7 @@ export function Spot() {
                 ...walletFrom,
                 balance: updatedBalanceFrom,
             });
-            toast.success("Wallet origen actualizada correctamente"); // Agregar toast
+            toast.success("Wallet origen actualizada correctamente");
             console.log("Wallet origen actualizada:", updatedWalletFrom);
 
             const transactionData = {
@@ -233,11 +233,11 @@ export function Spot() {
             };
 
             const createdTransaction = await createTransaction(transactionData);
-            toast.success("Transacción creada correctamente"); // Agregar toast
+            toast.success("Transacción creada correctamente");
             console.log("Transacción creada:", createdTransaction);
 
         } catch (error) {
-            toast.error("Error al procesar el formulario"); // Agregar toast
+            toast.error("Error al procesar el formulario");
             console.error("Error al procesar el formulario:", error);
         }
     };

@@ -34,7 +34,6 @@ export function Home() {
                 });
                 setWallets(walletsDataWithDetails);
 
-                // Obtener símbolos únicos que no sean USDT
                 const uniqueSymbols = [
                     ...new Set(
                         walletsDataWithDetails
@@ -43,7 +42,6 @@ export function Home() {
                     ),
                 ];
 
-                // Obtener tasas de conversión desde USDT
                 const rates = await getConversionRatesFromUSDT(uniqueSymbols);
                 setConversionRates(rates);
 
@@ -77,7 +75,6 @@ export function Home() {
         fetchData();
     }, []);
 
-    // Calcular total estimado en USDT
     const totalUSDT = wallets.reduce((total, wallet) => {
         const symbol = wallet.currency.symbol;
         const balance = parseFloat(wallet.balance);
@@ -116,7 +113,7 @@ export function Home() {
                             (currency) =>
                                 currency.symbol !== "USDT" &&
                                 currency.symbol !== "PEN"
-                        ) // Filtro para excluir USDT y PEN
+                        )
                         .map((currency) => (
                             <div
                                 key={currency.id}
@@ -171,7 +168,7 @@ export function Home() {
                 <div className="max-h-52 overflow-y-auto">
                     <ul>
                         {transactions
-                            .sort((a, b) => new Date(b.date) - new Date(a.date)) // Ordenar por fecha de forma inversa
+                            .sort((a, b) => new Date(b.date) - new Date(a.date))
                             .map((tx) => (
                                 <li
                                     key={tx.id}

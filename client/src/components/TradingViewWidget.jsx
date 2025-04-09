@@ -1,4 +1,3 @@
-// TradingViewWidget.jsx
 import React, { useEffect, useRef, memo } from 'react';
 
 function TradingViewWidget({ symbol = "AAPL" }) {
@@ -10,7 +9,6 @@ function TradingViewWidget({ symbol = "AAPL" }) {
     script.type = "text/javascript";
     script.async = true;
 
-    // Concatenar "USDT" al símbolo pasado
     const finalSymbol = `${symbol}USDT`;
 
     script.innerHTML = `
@@ -33,12 +31,11 @@ function TradingViewWidget({ symbol = "AAPL" }) {
     container.current.appendChild(script);
 
     return () => {
-      // Limpiar el script al desmontar el componente
       if (container.current) {
         container.current.innerHTML = "";
       }
     };
-  }, [symbol]); // Reactiva el efecto si el 'symbol' cambia
+  }, [symbol]);
 
   return (
     <div className="tradingview-widget-container" ref={container} style={{ height: "100%", width: "100%" }}>

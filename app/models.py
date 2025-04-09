@@ -3,15 +3,15 @@ from decimal import Decimal
 
 class Currency(models.Model):
     """Modelo para almacenar las monedas disponibles como USD, USDT, BTC, etc."""
-    symbol = models.CharField(max_length=10)  # Símbolo de la moneda, como 'USD', 'USDT', 'BTC'
-    name = models.CharField(max_length=50)    # Nombre de la moneda (Ej. 'Dólar', 'Tether')
+    symbol = models.CharField(max_length=10) 
+    name = models.CharField(max_length=50) 
     
     def __str__(self):
         return self.symbol
 
 class Wallet(models.Model):
-    currency = models.ForeignKey(Currency, on_delete=models.CASCADE)  # Relación con la moneda (USD, USDT)
-    balance = models.DecimalField(max_digits=30, decimal_places=16, default=Decimal('0.0'))  # Saldo de la moneda
+    currency = models.ForeignKey(Currency, on_delete=models.CASCADE)  
+    balance = models.DecimalField(max_digits=30, decimal_places=16, default=Decimal('0.0'))
 
     def __str__(self):
         return f"Wallet - {self.currency.symbol}: {self.balance} {self.currency.symbol}"
@@ -25,14 +25,14 @@ class Transaction(models.Model):
         ('CONVERSION', 'Conversión'),
     )
 
-    transaction_type = models.CharField(max_length=10, choices=TRANSACTION_TYPES)  # Tipo de transacción
-    amount = models.DecimalField(max_digits=30, decimal_places=16)  # Monto de la transacción (moneda origen)
-    total_value = models.DecimalField(max_digits=30, decimal_places=16)  # Valor total de la transacción en moneda destino
-    currency_from = models.ForeignKey(Currency, related_name='currency_from', on_delete=models.CASCADE)  # Moneda de origen
-    currency_to = models.ForeignKey(Currency, related_name='currency_to', on_delete=models.CASCADE)  # Moneda de destino
-    exchange_rate = models.DecimalField(max_digits=30, decimal_places=16)  # Tipo de cambio (Ej. 1 BTC = 24000 USDT)
-    wallet = models.ForeignKey(Wallet, on_delete=models.CASCADE)  # Billetera asociada con la transacción
-    date = models.DateTimeField(auto_now_add=True)  # Fecha de la transacción
+    transaction_type = models.CharField(max_length=10, choices=TRANSACTION_TYPES)  
+    amount = models.DecimalField(max_digits=30, decimal_places=16)  
+    total_value = models.DecimalField(max_digits=30, decimal_places=16)  
+    currency_from = models.ForeignKey(Currency, related_name='currency_from', on_delete=models.CASCADE)
+    currency_to = models.ForeignKey(Currency, related_name='currency_to', on_delete=models.CASCADE) 
+    exchange_rate = models.DecimalField(max_digits=30, decimal_places=16)  
+    wallet = models.ForeignKey(Wallet, on_delete=models.CASCADE)  
+    date = models.DateTimeField(auto_now_add=True)  
 
     def __str__(self):
         return f"{self.transaction_type} - {self.amount} {self.currency_from.symbol} to {self.currency_to.symbol} on {self.date}"

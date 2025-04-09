@@ -13,7 +13,7 @@ import { toast } from 'react-hot-toast';
 export function DepositForm() {
     const [transactionType, setTransactionType] = useState("deposit");
     const [conversionRate, setConversionRate] = useState(null);
-    const [walletBalance, setWalletBalance] = useState(null); // Nuevo estado para el balance de la wallet
+    const [walletBalance, setWalletBalance] = useState(null);
 
     const {
         register,
@@ -42,26 +42,26 @@ export function DepositForm() {
         handleTransactionChange("deposit");
     }, []);
 
-    // Efecto para actualizar el balance de la wallet según la moneda seleccionada
+    
     useEffect(() => {
         const fetchWalletBalance = async () => {
             if (currencyFrom) {
-                console.log("Consultando balance para:", currencyFrom);  // Log para depuración
+                console.log("Consultando balance para:", currencyFrom);
                 try {
                     const currencyData = await getCurrencyBySymbol(currencyFrom);
-                    console.log("Moneda seleccionada:", currencyData);  // Log para depuración
+                    console.log("Moneda seleccionada:", currencyData);
                     const wallet = await getWalletByCurrencyId(currencyData.id);
-                    console.log("Wallet encontrada:", wallet);  // Log para depuración
+                    console.log("Wallet encontrada:", wallet);
                     setWalletBalance(wallet ? wallet.balance : 0);
                 } catch (error) {
                     console.error("Error al obtener el balance de la wallet:", error);
-                    setWalletBalance(0); // Si ocurre un error, el balance es 0
+                    setWalletBalance(0);
                 }
             }
         };
 
         fetchWalletBalance();
-    }, [currencyFrom]); // Este efecto se ejecuta cada vez que cambia currencyFrom
+    }, [currencyFrom]);
 
     useEffect(() => {
         if (amount && !isNaN(amount) && conversionRate) {
