@@ -66,3 +66,23 @@ dist/
 # Pipenv / Poetry
 Pipfile.lock
 poetry.lock
+
+# Node.js modules (React, frontend dependencies)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# TailwindCSS / PostCSS config (si usas TailwindCSS)
+tailwind.config.js
+postcss.config.js
+
+# Webpack / Parcel / Next.js cache (si usas estas herramientas)
+.webpack/
+.parcel-cache/
+.next/
+
+# Docker (si usas Docker)
+.docker/
+
+# SQLite3 database files
+*.sqlite3
