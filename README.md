@@ -1,23 +1,4 @@
-¡Perfecto! Con base en todo lo que hiciste, aquí tienes un `README.md` en formato markdown para que cualquiera pueda clonar y levantar el proyecto Django + DRF + React (Vite):
-
-
 # 🪙 Cripto App - Django + React
-
-Aplicación fullstack que permite gestionar criptomonedas, billeteras y transacciones. Backend hecho con Django REST Framework y frontend con React + Vite.
-
----
-
-## 📁 Estructura del proyecto
-
-```bash
-cripto_app/
-├── config/              # Configuración de Django
-├── app/                 # Lógica del backend (models, views, serializers, etc.)
-├── client/              # Aplicación frontend en React + Vite
-├── manage.py            # CLI de Django
-├── requirements.txt     # Dependencias del backend
-└── README.md
-```
 
 ---
 
